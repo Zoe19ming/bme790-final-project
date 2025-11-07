@@ -15,12 +15,10 @@ class Form1(Form1Template):
     lbl = Label(text=f"Uploaded: {file.name}")
     self.linear_panel_1.add_component(lbl)
     try:
-      df_dict = anvil.server.call('process_uploaded_csv', file)
-      open_form('Form2', df_data=df_dict)
+      df_dict = anvil.server.call('save_uploaded_file', file)
     except Exception as e:
       alert(f"Server call failed: {e}")
       print(e)
-    
     pass
 
   def button_app1_click(self, **event_args):
