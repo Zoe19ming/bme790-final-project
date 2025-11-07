@@ -15,12 +15,11 @@ class Form1(Form1Template):
     lbl = Label(text=f"Uploaded: {file.name}")
     self.linear_panel_1.add_component(lbl)
 
-    
     # send file to server to process using pandas
-    #df_dict = anvil.server.call('process_uploaded_csv', file)
+    df_dict = anvil.server.call('process_uploaded_csv', file)
 
     # open Form2 and pass the processed dataframe (as list of dicts)
-    #open_form('Form2', df_data=df_dict)
+    open_form('Form2', df_data=df_dict)
     
     pass
 

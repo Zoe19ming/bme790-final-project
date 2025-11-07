@@ -14,8 +14,6 @@ def process_uploaded_csv(file):
                  "Dmspecific FAMILY HISTORY","StrokeSpecific FAMILY HISTORY","OTHER","Medications",
                  "Right Eye findings","Left Eye findings"]
   Cleaned_raw = Cleaned_raw.drop(columns = cols_to_drop)  
-  # Optionally do some preprocessing here
-  # e.g., df = df.dropna() or df.head(10)
 
   # Convert to list of dicts for display in DataGrid
   df_dict = Raw_data.to_dict(orient='records')
