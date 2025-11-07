@@ -1,5 +1,6 @@
 from ._anvil_designer import Form2Template
 from anvil import *
+import plotly.graph_objects as go
 import anvil.server
 
 class Form2(Form2Template):
