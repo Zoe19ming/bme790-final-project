@@ -1,9 +1,8 @@
-from ._anvil_designer import Form4Template
+from ._anvil_designer import Approach3Template
 from anvil import *
 import anvil.server
 
-
-class Form4(Form4Template):
+class Approach3(Approach3Template):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)

@@ -70,7 +70,7 @@ components:
       - event_bindings: {click: button_app3_click}
         layout_properties: {}
         name: button_app3
-        properties: {text: button_app3}
+        properties: {text: ECG Data analysis page}
         type: Button
       name: linear_panel_4
       properties: {}

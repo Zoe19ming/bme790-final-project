@@ -33,7 +33,7 @@ class Form1(Form1Template):
    
   def button_app3_click(self, **event_args):
      """This method is called when the button is clicked"""
-     open_form('Form4')
+     open_form('Approach3')
      pass
   def button_1_click(self, **event_args):
     """This method is called when the button is clicked"""
