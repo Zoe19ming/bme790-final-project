@@ -19,7 +19,9 @@ def save_uploaded_file(file):
                  "Right Eye findings","Left Eye findings"]
   Cleaned_raw = Cleaned_raw.drop(columns = cols_to_drop)  
   # Convert to list of dicts for display in DataGrid
-  df_dict = Cleaned_raw.to_dict(orient='records')
+  df_rows = Cleaned_raw.to_dict(orient = 'records')
+  df_columns = list(Cleaned_raw.columns)
+  df_dict = Cleaned_raw.to_dict(orient=)
   return df_dict
   
 @anvil.server.callable

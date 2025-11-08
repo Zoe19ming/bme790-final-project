@@ -5,9 +5,10 @@ import anvil.server
 
 
 class Form2(Form2Template):
-  
+ 
   def __init__(self, df_data=None, **properties):
     self.init_components(**properties)
+    
     df_data = anvil.server.call('get_df_from_session')
 
     if df_data and len(df_data) > 0:
@@ -15,6 +16,7 @@ class Form2(Form2Template):
       cols = [{"title": k, "data_key": k} for k in df_data[0].keys()]
       self.data_grid_1.columns = cols
       self.repeating_panel_1.items = df_data
+      print(df_data)
 
 
 
