@@ -31,5 +31,7 @@ components:
   name: ROC_AUC_output
   properties: {}
   type: Image
-container: {type: ColumnPanel}
+container:
+  event_bindings: {show: form_show}
+  type: ColumnPanel
 is_package: true

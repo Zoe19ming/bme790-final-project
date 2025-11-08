@@ -8,6 +8,7 @@ class Form2(Form2Template):
   
   def __init__(self, df_data=None, **properties):
     self.init_components(**properties)
+    df_data = anvil.server.call('get_df_from_session')
 
     if df_data and len(df_data) > 0:
       # Dynamically create columns
@@ -15,8 +16,6 @@ class Form2(Form2Template):
       self.data_grid_1.columns = cols
       self.repeating_panel_1.items = df_data
 
-  def data_grid_1_show(self, **event_args):
-    """This method is called when the data grid is shown on the screen"""
-    pass
+
 
       

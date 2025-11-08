@@ -16,6 +16,8 @@ class Form1(Form1Template):
     self.linear_panel_1.add_component(lbl)
     try:
       df_dict = anvil.server.call('save_uploaded_file', file)
+      anvil.server.call('store_df_in_session', df_dict)
+    # do NOT open Form2 here
     except Exception as e:
       alert(f"Server call failed: {e}")
       print(e)
@@ -23,7 +25,7 @@ class Form1(Form1Template):
 
   def button_app1_click(self, **event_args):
     """This method is called when the button is clicked"""
-    open_form('Form2')
+    open_form("Form2")
     pass
     
   def button_app2_click(self, **event_args):
