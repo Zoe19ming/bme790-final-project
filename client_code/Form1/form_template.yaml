@@ -58,8 +58,11 @@ components:
       name: approach2_part1
       properties: {text: 'Part 1: Brain Region Atrophy Analysis'}
       type: Button
-    - name: approach2_part2
-      properties: {text: button_1}
+    - layout_properties: {}
+      name: approach2_part2
+      properties:
+        text: |
+          Part2: Relations between microstructural measures and cognition
       type: Button
     - components:
       - layout_properties: {}
