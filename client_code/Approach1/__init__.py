@@ -12,6 +12,7 @@ import anvil.users
 class Approach1(Approach1Template):
   def __init__(self, **properties):
     self.init_components(**properties)
+    self._refresh_uploads_list()
    
 
     # Keep __init__ light; actual population runs on show
