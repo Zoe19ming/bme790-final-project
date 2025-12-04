@@ -1,11 +1,19 @@
 from ._anvil_designer import Approach1Template
 from anvil import *
+import anvil.google.auth, anvil.google.drive
+from anvil.google.drive import app_files
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
 import anvil.server
+import anvil.media
+import anvil.users
 
 class Approach1(Approach1Template):
   def __init__(self, **properties):
     self.init_components(**properties)
-    
+   
+
     # Keep __init__ light; actual population runs on show
     # (Designer expects a form_show or data_grid_1_show; we'll provide both)
 
