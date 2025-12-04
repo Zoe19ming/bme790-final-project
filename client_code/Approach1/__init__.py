@@ -17,27 +17,30 @@ class Approach1(Approach1Template):
     # (Designer expects a form_show or data_grid_1_show; we'll provide both)
   #Edited by Dec 4 Start
   def _refresh_uploads_list(self):
-    """Call server to get list of uploads and populate the dropdown."""
     try:
-      uploads = anvil.server.call('list_uploaded_datasets')  # returns list of dicts
+      res = anvil.server.call('list_uploaded_datasets')
     except Exception as e:
-      anvil.alert("Could not fetch uploads: " + str(e))
-      uploads = []
+      anvil.alert("RPC failed: " + repr(e))
+      return
 
-      # Format items for the dropdown: a list of tuples (display_text, row_id)
+    if not res:
+      anvil.alert("No response from server.")
+      return
+
+    if res.get("status") != "ok":
+      anvil.alert("Could not fetch uploads: " + res.get("message", "unknown server error"))
+      return
+
+    uploads = res.get("uploads", [])
     dd_items = []
     for u in uploads:
       name = u.get("name") or "unnamed"
       nr = u.get("nrows") or 0
       nc = u.get("ncols") or 0
-      ts = u.get("uploaded_at")
       display = f"{name} ({nr}×{nc})"
       dd_items.append({"label": display, "row_id": u.get("row_id")})
 
-      # assign to the DropDown. Make sure DropDown's `items` expects dicts with keys used below
     self.drop_down_uploads.items = dd_items
-
-    # optionally pre-select first
     if dd_items:
       self.drop_down_uploads.selected_value = dd_items[0]["row_id"]
     else:

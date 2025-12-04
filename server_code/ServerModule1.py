@@ -13,7 +13,7 @@ import anvil.media
 import json
 import numpy as np
 from datetime import datetime
-
+import traceback
 #import wfdb
 #import matplotlib.pyplot as plt
 #Changes made in Dec 4 by ShiaoXu Start
@@ -96,6 +96,30 @@ def save_uploaded_file(file):
   df_rows = Cleaned_raw.to_dict(orient = 'records')
   df_columns = list(Cleaned_raw.columns)
   return {"rows": df_rows,"columns":df_columns}
+
+@anvil.server.callable
+def list_uploaded_datasets():
+  try:
+    rows = []
+    # <<-- CHANGE THIS to the actual table name you created:
+    # If your table is named "uploaded_data" use that. If you really have approach1_data, keep it.
+    table = app_tables.approach1_data   # <<<<<< check this name
+    for r in table.search():
+      print("Row keys:", list(r))
+      rows.append({
+        #"row_id": r.get_id(),
+        "name":  r.get("name"),
+        "nrows": r.get("nrows"),
+        "ncols": r.get("ncols"),
+        "uploaded_at": r.get("uploaded_at")
+      })
+    rows.sort(key=lambda x: x.get("uploaded_at") or datetime.min, reverse=True)
+    return {"status": "ok", "uploads": rows}
+  except Exception as e:
+    # Print full traceback to server logs so you can inspect it in the Editor -> Logs
+    print("Error in list_uploaded_datasets():", e)
+    traceback.print_exc()
+    return {"status": "error", "message": f"Server error: {type(e).__name__}: {e}"}
 #Changes made in Dec 4 by ShiaoXu Ended
 
 @anvil.server.callable
