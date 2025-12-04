@@ -46,7 +46,7 @@ components:
   properties:
     columns:
     - {data_key: metric, id: JKSDUP, title: Metric}
-    - {data_key: dm_mean_sd, id: VJQQOR, title: Non-diabetic Group}
+    - {data_key: dm_mean_sd, expand: false, id: VJQQOR, title: Non-diabetic Group, width: 126}
     - {data_key: non_dm_mean_sd, expand: false, id: OJLQEN, title: Diabetic Group, width: 246.9998779296875}
     - {data_key: p_value, id: WMYIUM, title: p_value}
     rows_per_page: 30

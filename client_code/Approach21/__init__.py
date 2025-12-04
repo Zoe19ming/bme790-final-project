@@ -34,7 +34,7 @@ class Approach21(Approach21Template):
     # ---- BEFORE calling the server: show "running" status ----
     self.button_run_analysis.enabled = False
     self.label_status.text = "Running analysis, please wait..."
-    self.label_status.foreground = "blue"   # optional: show as blue text
+    self.label_status.foreground = "blue"
   
     try:
       # Call server: get rows + sample sizes
@@ -46,27 +46,24 @@ class Approach21(Approach21Template):
       rows = result["rows"]
       n_dm = result["n_dm"]
       n_non = result["n_non"]
+      
+      self.repeating_panel_demographics.items = rows
   
-      # Bind rows to the DataGrid
-      self.Demographic_characteristics.items = rows
-  
-      # Update column headers to show group sample sizes
       cols = self.Demographic_characteristics.columns
-      cols[1].title = f"DM_mean±SD (n={n_dm})"
-      cols[2].title = f"NonDM_mean±SD (n={n_non})"
-      cols[3].title = "p_value"
+      cols[1]['title'] = f"DM_mean±SD (n={n_dm})"
+      cols[2]['title'] = f"NonDM_mean±SD (n={n_non})"
+      cols[3]['title'] = "p_value"
+      self.Demographic_characteristics.columns = cols
   
-      # ---- AFTER success: update status ----
-      self.label_status.text = "Analysis completed successfully."
+      self.label_status.text = f"Analysis completed successfully. Metrics = {len(rows)}"
   
     except Exception as e:
-      # ---- On error: show error status ----
       self.label_status.text = "Analysis failed. See error message."
       alert(f"Error during analysis: {e}")
   
     finally:
-      # ---- Always re-enable button ----
       self.button_run_analysis.enabled = True
+
 
   def returnhome_click(self, **event_args):
     """This method is called when the button is clicked"""

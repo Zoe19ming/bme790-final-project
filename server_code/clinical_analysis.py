@@ -169,15 +169,17 @@ def analyze_dm_vs_non_dm(file_media):
       nan_policy="omit"
     )
 
-    dm_str = f"{dm_clean.mean():.4f} ± {dm_clean.std(ddof=1):.4f}"
-    non_str = f"{non_clean.mean():.4f} ± {non_clean.std(ddof=1):.4f}"
+    dm_str = f"{dm_clean.mean():.3f} ± {dm_clean.std(ddof=1):.3f}"
+    non_str = f"{non_clean.mean():.3f} ± {non_clean.std(ddof=1):.3f}"
+    p_fmt = f"{p:.3f}" if p is not None and not np.isnan(p) else "N/A"
 
     rows.append({
       "metric": col,
       "dm_mean_sd": dm_str,
       "non_dm_mean_sd": non_str,
-      "p_value": float(p) if p is not None and not np.isnan(p) else None
+      "p_value": p_fmt
     })
+
 
   return {
     "rows": rows,
