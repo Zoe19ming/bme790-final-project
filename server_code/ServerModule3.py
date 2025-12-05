@@ -200,17 +200,17 @@ def generate_boxplots(file):
   try:
     # Load data
     # data = pd.read_csv(BytesIO(file.get_bytes()))
-    file_bytes = file.get_bytes()  # Get bytes once
-    data = pd.read_csv(BytesIO(file_bytes))
-    data = data.dropna(subset=['Is_DM'])
+    df = pd.read_csv(BytesIO(file.get_bytes()))
+    data = df.dropna(subset=['Is_DM'])
+    print("result1")
 
     # Convert boolean if needed
     if data['Is_DM'].dtype == 'object':
       data['Is_DM'] = data['Is_DM'].map({'True': True, 'False': False, True: True, False: False})
-
-      # Get statistical results for p-values
+        
     stat_result = perform_statistical_analysis(file)
     stat_results = pd.DataFrame(stat_result['results']) if stat_result['status'] == 'success' else None
+    print("test2")
 
     # Key biomarkers to plot
     key_biomarkers = ['SDNN (ms)', 'RMSSD (ms)', 'pNN50 (%)',
@@ -256,6 +256,7 @@ def generate_boxplots(file):
     plt.savefig(buffer, format='png', dpi=300, bbox_inches='tight')
     buffer.seek(0)
     plt.close()
+    print("test3")
 
     return anvil.media.from_file(buffer, 'image/png')
 
@@ -342,8 +343,8 @@ def generate_forest_plot(file):
     plt.savefig(buffer, format='png', dpi=300, bbox_inches='tight')
     buffer.seek(0)
     plt.close()
-
-    return anvil.media.from_file(buffer, 'image/png')
+    return buffer.getvalue()  # Return raw bytes
+    #return anvil.media.from_file(buffer, 'image/png')
 
   except Exception as e:
       print(f"Error generating forest plot: {str(e)}")
