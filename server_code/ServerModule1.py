@@ -19,6 +19,10 @@ import traceback
 #Changes made in Dec 4 by ShiaoXu Start
   
 @anvil.server.callable
+def ping():
+  """Simple test to confirm server callables are available."""
+  return "pong"
+@anvil.server.callable
 def process_csv_file(file_media, store_as="dataframe_json"):
   """
     file_media: the anvil Media object uploaded from the Form
@@ -96,7 +100,53 @@ def load_dataframe_from_row(row_id):
   df_rows = Cleaned_raw.to_dict(orient = 'records')
   df_columns = list(Cleaned_raw.columns)
   return {"rows": df_rows,"columns":df_columns}'''
+@anvil.server.callable
+def load_upload_records(row_id, max_rows=200):
+  """
+    Given a row id (from list_uploaded_datasets), parse its data_json and
+    return up to max_rows records as a list of dicts for the client to display.
+    """
+  try:
+    table_name = "approach1_data"   # <<-- change this if your upload rows are in another table
+    if not hasattr(app_tables, table_name):
+      return {"status":"error", "message": f"Table '{table_name}' not found in app_tables."}
 
+    table = getattr(app_tables, table_name)
+    row = table.get_by_id(row_id)
+    if row is None:
+      return {"status":"error", "message":"Row not found (bad row_id?)"}
+
+    data_json = row.get("data_json")
+    if not data_json:
+      return {"status":"error", "message":"No data_json found in this row"}
+
+      # Try parsing as pandas orient='split' JSON
+    try:
+      df = pd.read_json(data_json, orient="split")
+    except Exception:
+      # Fallback: try loading as plain JSON with keys 'columns' and 'data'
+      try:
+        obj = json.loads(data_json)
+        if isinstance(obj, dict) and "columns" in obj and "data" in obj:
+          df = pd.DataFrame(obj["data"], columns=obj["columns"])
+        else:
+          df = pd.DataFrame(obj)
+      except Exception as e2:
+        return {"status":"error", "message": f"Failed to parse data_json: {e2}"}
+
+        # Limit rows if requested (preview)
+    if max_rows is not None:
+      df = df.iloc[:int(max_rows)]
+
+    records = df.to_dict(orient='records')
+    columns = df.columns.tolist()
+    return {"status":"ok", "columns": columns, "records": records, "nrows": df.shape[0], "ncols": df.shape[1]}
+
+  except Exception as e:
+    # print traceback to server logs for debugging
+    traceback.print_exc()
+    return {"status":"error", "message": f"{type(e).__name__}: {e}"}
+    
 @anvil.server.callable
 def list_uploaded_datasets():
   """
