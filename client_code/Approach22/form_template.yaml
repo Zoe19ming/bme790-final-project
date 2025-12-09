@@ -33,44 +33,50 @@ components:
     name: file_loader
     properties: {background: 'theme:Primary Container', text: Upload your data here}
     type: FileLoader
-  - event_bindings: {click: button_1_click}
+  - event_bindings: {click: run_btn_click}
     layout_properties: {grid_position: 'IAGVQL,GZQSLB'}
-    name: analysis
+    name: run_btn
     properties: {background: 'theme:Primary Container', icon: 'fa:bar-chart', text: Start Analysis}
     type: Button
-  - layout_properties: {grid_position: 'OWXTKN,QMMWQP'}
-    name: label_2_copy_2
+  - layout_properties: {grid_position: 'GKPAWG,HNHJAI'}
+    name: label_status
+    properties: {text: Ready}
+    type: Label
+  - layout_properties: {grid_position: 'ATVPTE,VSNVDU KJQQHN,WKZZBC'}
+    name: label_hvlt_title
     properties: {align: center, bold: true, text: HVLT Total Score}
     type: Label
   - components:
     - name: hvlt_repeating_panel
       properties: {item_template: Approach21.RowTemplate5}
       type: RepeatingPanel
-    - name: label_2_copy_2_copy_copy
-      properties:
-        align: center
-        bold: true
-        text: |
-          VF: animals (T score)
-      type: Label
-    - components:
-      - name: vf_repeating_panel
-        properties: {item_template: Approach21.RowTemplate5}
-        type: RepeatingPanel
-      name: Demographic_characteristics_copy_copy
-      properties:
-        columns:
-        - {data_key: roi, expand: false, id: JKSDUP, title: Brian Region}
-        - {data_key: p, id: VJQQOR, title: p}
-        - {data_key: r2_aj, expand: false, id: OJLQEN, title: r2_aj, width: 200}
-      type: DataGrid
-    layout_properties: {grid_position: 'ATVPTE,VSNVDU'}
-    name: Demographic_characteristics_copy
+    layout_properties: {grid_position: 'ATVPTE,VSNVDU HJXCTA,MNQHTH'}
+    name: hvlt_datagrid
+    properties:
+      columns:
+      - {data_key: roi, expand: false, id: JKSDUP, title: Brian Region, width: 111}
+      - {data_key: p, expand: false, id: VJQQOR, title: p, width: 108.66665649414062}
+      - {data_key: r2_aj, expand: false, id: OJLQEN, title: r2_aj, width: 118.66665649414062}
+    type: DataGrid
+  - layout_properties: {grid_position: 'ATVPTE,RCIWUW GKUMGV,JWQKHR'}
+    name: label_vf_title
+    properties:
+      align: center
+      bold: true
+      text: |
+        VF: animals (T score)
+    type: Label
+  - components:
+    - name: vf_repeating_panel
+      properties: {item_template: Approach21.RowTemplate5}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'ATVPTE,RCIWUW YZUZZR,WRGIAU'}
+    name: vf_datagrid
     properties:
       columns:
       - {data_key: roi, expand: false, id: JKSDUP, title: Brian Region}
-      - {data_key: p, id: VJQQOR, title: p}
-      - {data_key: r2_aj, expand: false, id: OJLQEN, title: r2_aj, width: 200}
+      - {data_key: p, expand: false, id: VJQQOR, title: p, width: 106}
+      - {data_key: r2_aj, expand: false, id: OJLQEN, title: r2_aj, width: 106.6666259765625}
     type: DataGrid
   layout_properties: {slot: default}
   name: content_panel
