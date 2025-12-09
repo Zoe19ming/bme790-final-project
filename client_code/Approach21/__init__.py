@@ -11,25 +11,25 @@ class Approach21(Approach21Template):
     self.clinical_file = None
 
     #---------- Initial state: Hide all result-related components ----------
-    # 总体 demographic 表
+    # whole demographic chart
     self.Demographic_characteristics.visible = False
 
-    # GM 块
+    # GM 
     self.label_gm_title.visible = False
     self.datagrid_gm.visible = False
     self.image_gm.visible = False
 
-    # WM 块
+    # WM 
     self.label_wm_title.visible = False
     self.datagrid_wm.visible = False
     self.image_wm.visible = False
 
-    # CSF 块
+    # CSF 
     self.label_csf_title.visible = False
     self.datagrid_csf.visible = False
     self.image_csf.visible = False
 
-    # WMH 块
+    # WMH 
     self.label_wmh_title.visible = False
     self.datagrid_wmh.visible = False
     self.image_wmh.visible = False
@@ -60,7 +60,6 @@ class Approach21(Approach21Template):
     self.label_status.text = "Running analysis, please wait..."
     self.label_status.foreground = "blue"
 
-    # 运行分析之前也先把所有结果区域隐藏（防止看到旧结果）
     self.Demographic_characteristics.visible = False
     self.label_gm_title.visible = False
     self.datagrid_gm.visible = False
@@ -83,7 +82,7 @@ class Approach21(Approach21Template):
       )
 
       # ------------------------------
-      # 2) Demographic/global 表格
+      # 2) Demographic/global 
       # ------------------------------
       rows = result["rows"]
       n_dm = result["n_dm"]
@@ -112,8 +111,7 @@ class Approach21(Approach21Template):
       self.repeating_panel_wm.items = wm_rows
       self.repeating_panel_csf.items = csf_rows
       self.repeating_panel_wmh.items = wmh_rows
-
-      # 有结果就显示小标题 + 表格
+      
       if gm_rows:
         self.label_gm_title.visible = True
         self.datagrid_gm.visible = True
@@ -128,7 +126,7 @@ class Approach21(Approach21Template):
         self.datagrid_wmh.visible = True
 
       # ------------------------------
-      # 4) GM / WM / CSF / WMH 图像
+      # 4) GM / WM / CSF / WMH 
       # ------------------------------
       gm_plot = result.get("gm_plot", None)
       if gm_plot is not None:

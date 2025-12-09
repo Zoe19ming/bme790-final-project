@@ -16,8 +16,8 @@ components:
     properties:
       bold: true
       font_size: 19
-      text: |
-        Global DTI metrics vs cognition
+      text: |2
+         DTI metrics vs cognition
     type: Label
   - layout_properties: {grid_position: 'ZQERAY,DOFLMC'}
     name: returnhome
