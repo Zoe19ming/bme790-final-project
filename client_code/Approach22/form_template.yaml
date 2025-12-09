@@ -44,14 +44,29 @@ components:
     - name: repeating_panel_1_copy
       properties: {item_template: Approach21.RowTemplate5}
       type: RepeatingPanel
-    layout_properties: {grid_position: 'AKIIOL,BHASFR'}
+    - components:
+      - name: repeating_panel_1_copy_copy_2
+        properties: {item_template: Approach21.RowTemplate5}
+        type: RepeatingPanel
+      layout_properties: {}
+      name: Demographic_characteristics_copy_2
+      properties:
+        columns:
+        - {data_key: column_1, expand: false, id: JKSDUP, title: HVLT (T scores), width: 190.99996948242188}
+        - {data_key: column_2, id: VJQQOR, title: whole brain FA}
+        - {data_key: column_3, expand: false, id: OJLQEN, title: whole brain L1, width: 200}
+        - {data_key: column_1, id: RRKBSO, title: whole brain MD}
+        - {data_key: column_1, id: NJFKCS, title: whole brain RD}
+      type: DataGrid
+    layout_properties: {grid_position: 'UFTSSX,GZSCVQ'}
     name: Demographic_characteristics
     properties:
       columns:
-      - {data_key: column_1, id: JKSDUP, title: Metric}
-      - {data_key: column_2, id: VJQQOR, title: Non-diabetic Group}
-      - {data_key: column_3, expand: false, id: OJLQEN, title: Diabetic Group, width: 248.333251953125}
-      - {data_key: column_1, id: RRKBSO, title: p-value}
+      - {data_key: column_1, expand: false, id: JKSDUP, title: VF animals (T scores), width: 190.99996948242188}
+      - {data_key: column_2, id: VJQQOR, title: whole brain FA}
+      - {data_key: column_3, expand: false, id: OJLQEN, title: whole brain L1, width: 200}
+      - {data_key: column_1, id: RRKBSO, title: whole brain MD}
+      - {data_key: column_1, id: NJFKCS, title: whole brain RD}
     type: DataGrid
   - layout_properties: {grid_position: 'FRBOSM,FDKMVT'}
     name: label_3_copy
@@ -73,7 +88,7 @@ components:
     name: button_3
     properties: {background: 'theme:Primary Container', bold: false, icon: 'fa:bar-chart', text: Start Analysis}
     type: Button
-  - layout_properties: {grid_position: 'IXURTE,ZJEPGX'}
+  - layout_properties: {grid_position: 'IAOQCG,CAKECO'}
     name: label_2_copy_3
     properties: {font_size: 17, text: 'Regional DTI metrics and cognitive performance '}
     type: Label
@@ -81,14 +96,29 @@ components:
     - name: repeating_panel_1_copy_copy
       properties: {item_template: Approach21.RowTemplate5}
       type: RepeatingPanel
-    layout_properties: {grid_position: 'YEXAUI,WTFBMF'}
+    - components:
+      - name: repeating_panel_1_copy_copy_2_copy
+        properties: {item_template: Approach21.RowTemplate5}
+        type: RepeatingPanel
+      layout_properties: {}
+      name: Demographic_characteristics_copy_2_copy
+      properties:
+        columns:
+        - {data_key: column_1, expand: false, id: JKSDUP, title: HVLT (T scores), width: 190.99996948242188}
+        - {data_key: column_2, id: VJQQOR, title: whole brain FA}
+        - {data_key: column_3, expand: false, id: OJLQEN, title: whole brain L1, width: 200}
+        - {data_key: column_1, id: RRKBSO, title: whole brain MD}
+        - {data_key: column_1, id: NJFKCS, title: whole brain RD}
+      type: DataGrid
+    layout_properties: {grid_position: 'IXURTE,NSNPAZ'}
     name: Demographic_characteristics_copy
     properties:
       columns:
-      - {data_key: column_1, id: JKSDUP, title: Metric}
-      - {data_key: column_2, id: VJQQOR, title: Non-diabetic Group}
-      - {data_key: column_3, expand: false, id: OJLQEN, title: Diabetic Group, width: 248.333251953125}
-      - {data_key: column_1, id: GGQMRM, title: p-value}
+      - {data_key: column_1, expand: false, id: JKSDUP, title: VF animals (T scores), width: 190.99996948242188}
+      - {data_key: column_2, id: VJQQOR, title: whole brain FA}
+      - {data_key: column_3, expand: false, id: OJLQEN, title: whole brain L1, width: 200}
+      - {data_key: column_1, id: RRKBSO, title: whole brain MD}
+      - {data_key: column_1, id: NJFKCS, title: whole brain RD}
     type: DataGrid
   layout_properties: {slot: default}
   name: content_panel
