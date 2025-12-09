@@ -10,7 +10,7 @@ class Approach21(Approach21Template):
     self.init_components(**properties)
     self.clinical_file = None
 
-    # ---------- 初始：隐藏所有结果相关的组件 ----------
+    #---------- Initial state: Hide all result-related components ----------
     # 总体 demographic 表
     self.Demographic_characteristics.visible = False
 
