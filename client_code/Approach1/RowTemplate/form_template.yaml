@@ -3,5 +3,9 @@ components:
   name: container_panel
   properties: {}
   type: ColumnPanel
+- layout_properties: {column: 'null'}
+  name: flow_panel_1
+  properties: {}
+  type: FlowPanel
 container: {type: DataRowPanel}
 is_package: true

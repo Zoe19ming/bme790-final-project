@@ -23,7 +23,7 @@ def ping():
   """Simple test to confirm server callables are available."""
   return "pong"
 @anvil.server.callable
-def process_csv_file(file_media, store_as="dataframe_json"):
+def process_csv_file(file_media):
   """
     file_media: the anvil Media object uploaded from the Form
     store_as: "dataframe_json" (default) or "numpy_json" or "numpy_blob"
@@ -39,24 +39,10 @@ def process_csv_file(file_media, store_as="dataframe_json"):
                   "Dmspecific FAMILY HISTORY","StrokeSpecific FAMILY HISTORY","OTHER","Medications",
                   "Right Eye findings","Left Eye findings"]
   Cleaned_raw = Cleaned_raw.drop(columns = cols_to_drop) 
-  return Cleaned_raw
-  '''# metadata
-  name = getattr(file_media, "name", "uploaded.csv")
-  nrows, ncols = Cleaned_raw.shape
-  uploaded_at = datetime.utcnow()
-
-  # Option A (recommended): store DataFrame as JSON (reconstructable with orient='split')
-  if store_as == "dataframe_json":
-    json_str = Cleaned_raw.to_json(orient="split")  # safe, reconstructable
-    row = app_tables.approach1_data.add_row(
-      name=name,
-      data_json=json_str,
-      nrows=nrows,
-      ncols=ncols,
-      uploaded_at=uploaded_at
-    )
-    return {"status": "ok", "storage": "dataframe_json", "row_id": row.get_id()}
-'''
+  records = Cleaned_raw.to_dict(orient="records")   # list of row dicts
+  columns = Cleaned_raw.columns.tolist()            # list of feature names
+  return {"records": records, "columns": columns}
+  
 @anvil.server.callable
 def load_dataframe_from_row(row_id):
   row = app_tables.approach1_data.get_by_id(row_id)
