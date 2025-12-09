@@ -83,6 +83,30 @@ class Approach21(Approach21Template):
     self.init_components(**properties)
     self.clinical_file = None
 
+    # ---------- 初始：隐藏所有结果相关的组件 ----------
+    # 总体 demographic 表
+    self.Demographic_characteristics.visible = False
+
+    # GM 块
+    self.label_gm_title.visible = False
+    self.datagrid_gm.visible = False
+    self.image_gm.visible = False
+
+    # WM 块
+    self.label_wm_title.visible = False
+    self.datagrid_wm.visible = False
+    self.image_wm.visible = False
+
+    # CSF 块
+    self.label_csf_title.visible = False
+    self.datagrid_csf.visible = False
+    self.image_csf.visible = False
+
+    # WMH 块
+    self.label_wmh_title.visible = False
+    self.datagrid_wmh.visible = False
+    self.image_wmh.visible = False
+
   # ---------- File loader: upload CSV ----------
   def file_loader_clinical_change(self, file, **event_args):
     """
@@ -95,18 +119,10 @@ class Approach21(Approach21Template):
     self.clinical_file = file
     alert("File uploaded successfully.")
 
-  # ---------- Run analysis: call server, fill tables, show plots ----------
+  # ---------- Run analysis ----------
   def button_run_analysis_click(self, **event_args):
     """
     Called when the user clicks 'Start analysis'.
-
-    Steps:
-      1) Check that a CSV file has been uploaded
-      2) Call the server function 'analyze_dm_vs_non_dm'
-      3) Populate:
-         - Demographic characteristics DataGrid
-         - GM / WM / CSF / WMH tables (DataGrids)
-         - GM / WM / CSF / WMH bar plots (Images)
     """
     if self.clinical_file is None:
       alert("Please upload the clinical CSV file first.")
@@ -117,69 +133,99 @@ class Approach21(Approach21Template):
     self.label_status.text = "Running analysis, please wait..."
     self.label_status.foreground = "blue"
 
+    # 运行分析之前也先把所有结果区域隐藏（防止看到旧结果）
+    self.Demographic_characteristics.visible = False
+    self.label_gm_title.visible = False
+    self.datagrid_gm.visible = False
+    self.image_gm.visible = False
+    self.label_wm_title.visible = False
+    self.datagrid_wm.visible = False
+    self.image_wm.visible = False
+    self.label_csf_title.visible = False
+    self.datagrid_csf.visible = False
+    self.image_csf.visible = False
+    self.label_wmh_title.visible = False
+    self.datagrid_wmh.visible = False
+    self.image_wmh.visible = False
+
     try:
-      # 1) Call the server: this returns demographics + 4 domains
+      # 1) Call the server
       result = anvil.server.call(
         'analyze_dm_vs_non_dm',
         self.clinical_file
       )
 
-      # -------------------------------------------------
-      # 2) Demographic/global comparison (existing table)
-      # -------------------------------------------------
+      # ------------------------------
+      # 2) Demographic/global 表格
+      # ------------------------------
       rows = result["rows"]
       n_dm = result["n_dm"]
       n_non = result["n_non"]
 
-      # Bind rows to the repeating panel inside the main DataGrid
       self.repeating_panel_demographics.items = rows
 
-      # Update the DataGrid column headers to show sample sizes
       cols = self.Demographic_characteristics.columns
-      # Column 0: Metric; column 1: DM; column 2: Non-DM; column 3: p_value
       cols[1]["title"] = f"DM_mean±SD (n={n_dm})"
       cols[2]["title"] = f"NonDM_mean±SD (n={n_non})"
       cols[3]["title"] = "p_value"
       self.Demographic_characteristics.columns = cols
 
-      # -------------------------------------------------
-      # 3) GM / WM / CSF / WMH tables
-      #    (each DataGrid uses the same keys: metric, dm_mean_sd, non_dm_mean_sd, p_value)
-      # -------------------------------------------------
+      # 分析完再显示这块
+      self.Demographic_characteristics.visible = True
+
+      # ------------------------------
+      # 3) GM / WM / CSF / WMH 表格
+      # ------------------------------
       gm_rows = result.get("gm_rows", [])
       wm_rows = result.get("wm_rows", [])
       csf_rows = result.get("csf_rows", [])
       wmh_rows = result.get("wmh_rows", [])
 
-      # Bind to the corresponding repeating panels
-      # (you need to have these in the Designer)
       self.repeating_panel_gm.items = gm_rows
       self.repeating_panel_wm.items = wm_rows
       self.repeating_panel_csf.items = csf_rows
       self.repeating_panel_wmh.items = wmh_rows
 
-      # -------------------------------------------------
-      # 4) GM / WM / CSF / WMH bar plots (Images)
-      # -------------------------------------------------
+      # 有结果就显示小标题 + 表格
+      if gm_rows:
+        self.label_gm_title.visible = True
+        self.datagrid_gm.visible = True
+      if wm_rows:
+        self.label_wm_title.visible = True
+        self.datagrid_wm.visible = True
+      if csf_rows:
+        self.label_csf_title.visible = True
+        self.datagrid_csf.visible = True
+      if wmh_rows:
+        self.label_wmh_title.visible = True
+        self.datagrid_wmh.visible = True
+
+      # ------------------------------
+      # 4) GM / WM / CSF / WMH 图像
+      # ------------------------------
       gm_plot = result.get("gm_plot", None)
       if gm_plot is not None:
         self.image_gm.source = gm_plot
+        self.image_gm.visible = True
 
       wm_plot = result.get("wm_plot", None)
       if wm_plot is not None:
         self.image_wm.source = wm_plot
+        self.image_wm.visible = True
 
       csf_plot = result.get("csf_plot", None)
       if csf_plot is not None:
         self.image_csf.source = csf_plot
+        self.image_csf.visible = True
 
       wmh_plot = result.get("wmh_plot", None)
       if wmh_plot is not None:
         self.image_wmh.source = wmh_plot
+        self.image_wmh.visible = True
 
-      # -------------------------------------------------
-      # 5) Final status
-      # -------------------------------------------------
+      # ------------------------------
+      # 5) Status
+      # ------------------------------
       self.label_status.text = (
         f"Analysis completed successfully. "
         f"Metrics (demographics/global) = {len(rows)}"
@@ -187,18 +233,13 @@ class Approach21(Approach21Template):
       self.label_status.foreground = "green"
 
     except Exception as e:
-      # If anything goes wrong, show an error and update status label
       self.label_status.text = "Analysis failed. See error message."
       self.label_status.foreground = "red"
       alert(f"Error during analysis: {e}")
 
     finally:
-      # Always re-enable the button
       self.button_run_analysis.enabled = True
 
-  # ---------- Navigation back to home ----------
   def returnhome_click(self, **event_args):
-    """
-    Called when the 'Home' button is clicked.
-    """
+    """Called when the 'Home' button is clicked."""
     open_form('Form1')
