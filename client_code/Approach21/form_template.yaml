@@ -51,6 +51,10 @@ components:
     - {data_key: p_value, id: WMYIUM, title: p_value}
     rows_per_page: 30
   type: DataGrid
+- layout_properties: {grid_position: 'IKTPBE,TUAZRO'}
+  name: image_1
+  properties: {height: 292.49993896484375}
+  type: Image
 container:
   properties: {background: '', col_widths: '{"TNWUBS":45,"KBQAII":15,"UMVQXI":60,"ALDVPY":55,"IJNDNW":35,"EGFJKA":25}', visible: true}
   type: ColumnPanel
